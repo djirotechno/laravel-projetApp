@@ -18,5 +18,14 @@ Route::get('/projects/create','ProjectsController@create')->name('projects.creat
 
 Route::post('/project','ProjectsController@store')->name('project.store');
 
-Route::get('/projects/{$id}','ProjectsController@show')->name('projects.show');
+Route::get('/projects/{project}','ProjectsController@show')->name('projects.show');
+
+Route::get('/projects/{project}/edit','ProjectsController@edit')->name('projects.edit');
+
+Route::put('/projects/{project}','ProjectsController@update')->name('projects.update');
+
+Route::delete('/projects/{project}','ProjectsController@destroy')->name('projects.destroy');
+
+Route::patch('/tasks/{task}','ProjectsTasksController@update');
+
 

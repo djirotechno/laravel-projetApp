@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Project;
+use App\Http\Requests\ProjectRequest;
 
 // $project = new Project();
         // $project->name = "Labo";
@@ -40,9 +41,16 @@ $project = Project::get()->all();
     }
 
 
-    public function store(){
+    public function store(ProjectRequest $request){
 
-        Project::create(request()->all());
+
+
+        // request()->validate([
+        //     'name' => 'required|min:6',
+        //     'description' => 'required|between:6,500',
+        // ]);
+
+        $projectid = Project::create(request()->all());
 
         //  Project::create([
 
@@ -53,17 +61,57 @@ $project = Project::get()->all();
 
         
 
+        return redirect()->route('projects.show',$projectid);
+    }
+
+
+    public function show(Project $project)
+    {
+
+        
+        //$project = Project::find($id);
+        //$project = Project::where('id',$id)->first();
+
+        return view('projects.show',[
+
+            'project' => $project
+
+        ]);
+        
+    }
+
+    public function edit(Project $project){
+
+        return view('projects.edit',[
+
+            'project' => $project
+
+        ]);
+    }
+    
+
+    public function update(Project $project, ProjectRequest $request)
+    {
+
+        $project->update([
+            'name' => request()->name,
+            'description' => request()->description,
+    
+        ]);
+        // $project->name = request()->name;
+        // $project->description = request()->description;
+        // $project->save();
+
+        return redirect()->route('projects.show',$project);
+    }
+
+    public function destroy(Project $project){
+
+        $project->delete();
+
+
         return redirect('/');
     }
 
-
-    public function show($id)
-    {
-
-        dd(Project::where('id',$id)->firts());
-
-        
-
-        
-    }
+    
 }

@@ -12,13 +12,13 @@
 	
 <a href="{{route('projects.create')}}">create project</a>
 
-@foreach ($project as $projects)
-<a href="/projects/{{$projects->id}}">
+@foreach ($project as $project)
+<a href="{{route('projects.show',$project)}}">
 	
-{{$projects->name}}
+{{$project->name}}
 
 </a>
-<p>{{$projects->description}}</p>
+<p>{{$project->description}}</p>
 
 	
 @endforeach 
